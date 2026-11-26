@@ -1,0 +1,25 @@
+[package]
+name = "xllvm"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "Portable slim LLVM (clang + lld + binutils) manager for zero-Docker cross-compilation."
+license.workspace = true
+repository.workspace = true
+keywords = ["llvm", "clang", "lld", "toolchain", "cross"]
+categories.workspace = true
+
+[dependencies]
+clap.workspace = true
+xcompiler-core.workspace = true
+
+[package.metadata.binstall]
+pkg-url = "{ repo }/releases/download/v{ version }/{ name }-{ target }.{ archive-format }"
+bin-dir = "{ bin }{ binary-ext }"
+pkg-fmt = "tgz"
+
+[package.metadata.binstall.overrides.x86_64-pc-windows-msvc]
+pkg-fmt = "zip"
+
+[package.metadata.binstall.overrides.aarch64-pc-windows-msvc]
+pkg-fmt = "zip"

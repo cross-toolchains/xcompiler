@@ -1,0 +1,29 @@
+[workspace]
+resolver = "3"
+members = [
+    "crates/xcompiler",
+    "crates/xcompiler-core",
+    "crates/xllvm",
+    "crates/xgcc",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+authors = ["The Xcompiler Project Developers and Contributors"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/cross-toolchains/xcompiler"
+categories = ["development-tools::build-utils", "development-tools", "command-line-utilities"]
+
+[workspace.dependencies]
+clap = { version = "4", features = ["derive", "env"] }
+cli-table = { version = "0.5", default-features = false, features = ["title"] }
+flate2 = "1"
+indicatif = "0.17"
+lzma-rs = "0.3"
+ureq = { version = "3", default-features = false, features = ["rustls"] }
+zip = { version = "2", default-features = false, features = ["deflate"] }
+
+xcompiler-core = { path = "crates/xcompiler-core", version = "0.1.0" }
+xllvm = { path = "crates/xllvm", version = "0.1.0" }
+xgcc = { path = "crates/xgcc", version = "0.1.0" }

@@ -1,0 +1,27 @@
+[package]
+name = "xcompiler"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "Unified portable compiler manager (xllvm + xgcc) for zero-Docker cross-compilation."
+license.workspace = true
+repository.workspace = true
+keywords = ["compiler", "llvm", "gcc", "toolchain", "cross"]
+categories.workspace = true
+
+[dependencies]
+clap.workspace = true
+xcompiler-core.workspace = true
+xgcc.workspace = true
+xllvm.workspace = true
+
+[package.metadata.binstall]
+pkg-url = "{ repo }/releases/download/v{ version }/{ name }-{ target }.{ archive-format }"
+bin-dir = "{ bin }{ binary-ext }"
+pkg-fmt = "tgz"
+
+[package.metadata.binstall.overrides.x86_64-pc-windows-msvc]
+pkg-fmt = "zip"
+
+[package.metadata.binstall.overrides.aarch64-pc-windows-msvc]
+pkg-fmt = "zip"

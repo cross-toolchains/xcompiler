@@ -1,0 +1,25 @@
+[package]
+name = "xgcc"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "Portable prebuilt cross-GCC toolchain manager (MinGW-w64 & embedded bare-metal)."
+license.workspace = true
+repository.workspace = true
+keywords = ["gcc", "mingw", "embedded", "toolchain", "cross"]
+categories.workspace = true
+
+[dependencies]
+clap.workspace = true
+xcompiler-core.workspace = true
+
+[package.metadata.binstall]
+pkg-url = "{ repo }/releases/download/v{ version }/{ name }-{ target }.{ archive-format }"
+bin-dir = "{ bin }{ binary-ext }"
+pkg-fmt = "tgz"
+
+[package.metadata.binstall.overrides.x86_64-pc-windows-msvc]
+pkg-fmt = "zip"
+
+[package.metadata.binstall.overrides.aarch64-pc-windows-msvc]
+pkg-fmt = "zip"

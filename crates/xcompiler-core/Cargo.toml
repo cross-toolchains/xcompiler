@@ -1,0 +1,18 @@
+[package]
+name = "xcompiler-core"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "Shared download, archive extraction, progress bar, and host detection utilities for xcompiler."
+license.workspace = true
+repository.workspace = true
+keywords = ["compiler", "llvm", "gcc", "toolchain", "cross"]
+categories.workspace = true
+
+[dependencies]
+cli-table.workspace = true
+flate2.workspace = true
+indicatif.workspace = true
+lzma-rs.workspace = true
+ureq.workspace = true
+zip.workspace = true
