@@ -15,7 +15,7 @@ Pairs directly with [`xsysroot`](https://github.com/cross-toolchains/xsysroot) a
 | Crate | Engine | Targets | Upstream |
 | :--- | :--- | :--- | :--- |
 | [`xllvm`](crates/xllvm/README.md) | **LLVM** (`clang` + `lld` + binutils) | Linux, Windows MSVC & gnullvm, macOS, iOS, Android, OpenHarmony, WebAssembly | [`cross-toolchains/llvm-slim`](https://github.com/cross-toolchains/llvm-slim) / [`kernel.org/pub/tools/llvm`](https://www.kernel.org/pub/tools/llvm/) |
-| [`xgcc`](crates/xgcc/README.md) | **GCC** (cross) | Windows MinGW (`*-pc-windows-gnu`), Embedded bare-metal (`arm-none-eabi`, `aarch64-none-elf`, `riscv-none-elf`) | [`xpack-dev-tools`](https://github.com/xpack-dev-tools) / [`arm/gnu-toolchain-for-windows-on-arm64`](https://github.com/arm/gnu-toolchain-for-windows-on-arm64) |
+| [`xgcc`](crates/xgcc/README.md) | **GCC** (cross) | Windows MinGW (`*-pc-windows-gnu`), Embedded bare-metal (`arm-none-eabi`, `aarch64-none-elf`, `riscv-none-elf`) | [`mingw-w64-gcc-xpack`](https://github.com/xpack-dev-tools/mingw-w64-gcc-xpack), [`arm-none-eabi-gcc-xpack`](https://github.com/xpack-dev-tools/arm-none-eabi-gcc-xpack), [`aarch64-none-elf-gcc-xpack`](https://github.com/xpack-dev-tools/aarch64-none-elf-gcc-xpack), [`riscv-none-elf-gcc-xpack`](https://github.com/xpack-dev-tools/riscv-none-elf-gcc-xpack), [`arm/gnu-toolchain-for-windows-on-arm64`](https://github.com/arm/gnu-toolchain-for-windows-on-arm64) |
 | `xcompiler` | Unified CLI + Lib | Re-exports `xllvm` & `xgcc` with a unified `ResolvedCompiler` API | — |
 | `xcompiler-core` | Shared Lib | Streaming HTTP, pure-Rust `.tar.xz`/`.tar.gz`/`.zip`, progress bars, `cli-table` | — |
 
