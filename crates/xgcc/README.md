@@ -1,9 +1,9 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://api.iconify.design/simple-icons/gnu.svg?color=%23ffffff" />
-  <source media="(prefers-color-scheme: light)" srcset="https://api.iconify.design/simple-icons/gnu.svg?color=%23000000" />
-  <img src="https://api.iconify.design/simple-icons/gnu.svg?color=%23000000" height="56" alt="GNU GCC" />
+  <source media="(prefers-color-scheme: dark)" srcset="https://api.iconify.design/devicon-plain/gcc.svg?color=%23ffffff" />
+  <source media="(prefers-color-scheme: light)" srcset="https://api.iconify.design/devicon-plain/gcc.svg?color=%23000000" />
+  <img src="https://api.iconify.design/devicon-plain/gcc.svg?color=%23000000" height="56" alt="GNU GCC" />
 </picture>
 
 <h1>xgcc</h1>
