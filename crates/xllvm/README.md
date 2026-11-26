@@ -43,10 +43,19 @@ cargo install xllvm
 ## 🚀 Usage
 
 ```sh
+# Check host & managed LLVM status
 xllvm doctor
-xllvm list
+
+# Install portable slim LLVM and add clang/lld to PATH
 xllvm install 23.1.6
-eval "$(xllvm env)"
+eval "$(xllvm env --managed)"
+
+# Compile a C program directly
+clang hello.c -o hello
+
+# Pair with xsysroot (e.g. xlinux / xdroid / xmac) for zero-Docker cross-compilation
+xlinux splat --target x86_64-unknown-linux-gnu --clang "$(xllvm path --managed)"
+~/.cache/xlinux/splat/x86_64-unknown-linux-gnu.2.31/bin/x86_64-unknown-linux-gnu-clang hello.c -o hello_linux
 ```
 
 ## Upstream Sources

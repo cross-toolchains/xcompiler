@@ -46,18 +46,21 @@ cargo install xcompiler
 ## 🚀 Usage
 
 ```sh
-# List supported compiler backends
-xcompiler list
-
-# Check host & managed compiler health (verifies clang + lld)
+# 1) Check host & managed compiler health (verifies clang + lld)
 xcompiler doctor
 
-# Install portable slim LLVM (clang + lld + binutils)
+# 2) Install portable slim LLVM (~26 MiB) and expose clang/lld in your shell
 xcompiler install llvm 23.1.6
+eval "$(xllvm env --managed)"
+clang hello.c -o hello
 
-# Install portable cross-GCC (MinGW-w64 or embedded bare-metal)
+# 3) Pair with xsysroot (xlinux / xdroid / xmac / xios / xohos) for cross-compilation
+xlinux splat --target x86_64-unknown-linux-gnu --clang "$(xllvm path --managed)"
+~/.cache/xlinux/splat/x86_64-unknown-linux-gnu.2.31/bin/x86_64-unknown-linux-gnu-clang hello.c -o hello_linux
+
+# 4) Or use xgcc to cross-compile Windows MinGW / ARM bare-metal
 xcompiler install gcc --target x86_64-pc-windows-gnu
-xcompiler install gcc --target arm-none-eabi
+"$(xgcc path --target x86_64-pc-windows-gnu)" hello.c -o hello.exe
 ```
 
 ### As a Rust library

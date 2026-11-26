@@ -43,10 +43,16 @@ cargo install xgcc
 ## 🚀 Usage
 
 ```sh
+# List supported cross-GCC targets
 xgcc list
+
+# Cross-compile a Windows x86_64 binary from Linux / macOS / Windows
 xgcc install --target x86_64-pc-windows-gnu
+"$(xgcc path --target x86_64-pc-windows-gnu)" hello.c -o hello.exe
+
+# Compile an ARM Cortex-M bare-metal object
 xgcc install --target arm-none-eabi
-xgcc path --target arm-none-eabi
+"$(xgcc path --target arm-none-eabi)" -mcpu=cortex-m4 -mthumb -c main.c -o main.o
 ```
 
 ## Upstream Providers
