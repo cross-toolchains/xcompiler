@@ -49,6 +49,16 @@ xgcc install --target arm-none-eabi
 xgcc path --target arm-none-eabi
 ```
 
+## Upstream Providers
+
+| Target | Upstream |
+| :--- | :--- |
+| `x86_64-pc-windows-gnu` | [`xpack-dev-tools/mingw-w64-gcc-xpack`](https://github.com/xpack-dev-tools/mingw-w64-gcc-xpack) |
+| `aarch64-pc-windows-gnu` | [`arm/gnu-toolchain-for-windows-on-arm64`](https://github.com/arm/gnu-toolchain-for-windows-on-arm64) |
+| `arm-none-eabi` | [`xpack-dev-tools/arm-none-eabi-gcc-xpack`](https://github.com/xpack-dev-tools/arm-none-eabi-gcc-xpack) |
+| `aarch64-none-elf` | [`xpack-dev-tools/aarch64-none-elf-gcc-xpack`](https://github.com/xpack-dev-tools/aarch64-none-elf-gcc-xpack) |
+| `riscv-none-elf` | [`xpack-dev-tools/riscv-none-elf-gcc-xpack`](https://github.com/xpack-dev-tools/riscv-none-elf-gcc-xpack) |
+
 ## License
 
 Dual-licensed under `MIT OR Apache-2.0`.

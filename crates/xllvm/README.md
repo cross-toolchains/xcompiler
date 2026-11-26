@@ -49,6 +49,13 @@ xllvm install 23.1.6
 eval "$(xllvm env)"
 ```
 
+## Upstream Sources
+
+| Source (`--source`) | Hosts | Upstream |
+| :--- | :--- | :--- |
+| `slim` (default) | Linux / macOS / Windows (`x86_64` & `aarch64`) | [`cross-toolchains/llvm-slim`](https://github.com/cross-toolchains/llvm-slim/releases) |
+| `kernel-org` | Linux (`x86_64` & `aarch64`) | [`kernel.org/pub/tools/llvm`](https://www.kernel.org/pub/tools/llvm/) |
+
 ## License
 
 Dual-licensed under `MIT OR Apache-2.0`.
