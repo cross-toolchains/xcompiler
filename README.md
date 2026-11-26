@@ -43,6 +43,33 @@ cargo install xcompiler --locked
 cargo install xcompiler
 ```
 
+## 🚀 Usage
+
+```sh
+# List supported compiler backends
+xcompiler list
+
+# Check host & managed compiler health (verifies clang + lld)
+xcompiler doctor
+
+# Install portable slim LLVM (clang + lld + binutils)
+xcompiler install llvm 23.1.6
+
+# Install portable cross-GCC (MinGW-w64 or embedded bare-metal)
+xcompiler install gcc --target x86_64-pc-windows-gnu
+xcompiler install gcc --target arm-none-eabi
+```
+
+### As a Rust library
+
+```rust
+use xcompiler::xllvm::{InstallOptions, resolve_or_install};
+
+let llvm = resolve_or_install(&InstallOptions::default(), false)?;
+println!("clang: {}", llvm.clang.display());
+println!("lld:   {}", llvm.lld.display());
+```
+
 ## License
 
 Dual-licensed under `MIT OR Apache-2.0`.
