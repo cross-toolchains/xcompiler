@@ -8,7 +8,7 @@ members = [
 ]
 
 [workspace.package]
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 authors = ["The Xcompiler Project Developers and Contributors"]
 license = "MIT OR Apache-2.0"
@@ -25,6 +25,6 @@ ureq = { version = "3", default-features = false, features = ["rustls"] }
 xtarget = { version = "0.1", default-features = false }
 zip = { version = "2", default-features = false, features = ["deflate"] }
 
-xcompiler-core = { path = "crates/xcompiler-core", version = "0.1.0" }
-xllvm = { path = "crates/xllvm", version = "0.1.0" }
-xgcc = { path = "crates/xgcc", version = "0.1.0" }
+xcompiler-core = { path = "crates/xcompiler-core", version = "0.1.1" }
+xllvm = { path = "crates/xllvm", version = "0.1.1" }
+xgcc = { path = "crates/xgcc", version = "0.1.1" }
