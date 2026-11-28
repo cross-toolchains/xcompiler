@@ -22,6 +22,7 @@ flate2 = "1"
 indicatif = "0.17"
 lzma-rs = "0.3"
 ureq = { version = "3", default-features = false, features = ["rustls"] }
+xtarget = { version = "0.1", default-features = false }
 zip = { version = "2", default-features = false, features = ["deflate"] }
 
 xcompiler-core = { path = "crates/xcompiler-core", version = "0.1.0" }

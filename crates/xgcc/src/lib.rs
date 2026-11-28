@@ -62,6 +62,11 @@ pub struct GccToolchain {
     pub gcc: PathBuf,
     pub gxx: PathBuf,
     pub ar: PathBuf,
+    pub ranlib: Option<PathBuf>,
+    pub objcopy: Option<PathBuf>,
+    pub objdump: Option<PathBuf>,
+    pub strip: Option<PathBuf>,
+    pub size: Option<PathBuf>,
     pub target: String,
     pub version: String,
 }
@@ -70,18 +75,35 @@ pub fn default_cache_dir() -> PathBuf {
     default_tool_cache_dir("xgcc")
 }
 
+/// Resolves a target string (Rust, LLVM, GNU, or Zig triple) into a supported [`GccTargetSpec`].
+///
+/// Uses [`xtarget::Target`] normalization so Rust bare-metal and MinGW triples such as
+/// `thumbv7em-none-eabi`, `riscv32imac-unknown-none-elf`, `aarch64-unknown-none`, or
+/// `x86_64-w64-mingw32` automatically route to their corresponding GCC multilib toolchain.
 pub fn find_spec(target: &str) -> Result<GccTargetSpec, String> {
-    SUPPORTED_TARGETS
+    if let Some(spec) = SUPPORTED_TARGETS
         .iter()
         .copied()
         .find(|s| s.target == target || s.tool_prefix == target)
-        .ok_or_else(|| {
-            let names: Vec<_> = SUPPORTED_TARGETS.iter().map(|s| s.target).collect();
-            format!(
-                "unsupported xgcc target `{target}` (supported: {})",
-                names.join(", ")
-            )
-        })
+    {
+        return Ok(spec);
+    }
+
+    if let Ok(parsed) = xtarget::Target::parse_loose(target)
+        && let Some(gnu) = parsed.gnu_triple()
+        && let Some(spec) = SUPPORTED_TARGETS
+            .iter()
+            .copied()
+            .find(|s| s.tool_prefix == gnu || s.target == parsed.as_str())
+    {
+        return Ok(spec);
+    }
+
+    let names: Vec<_> = SUPPORTED_TARGETS.iter().map(|s| s.target).collect();
+    Err(format!(
+        "unsupported xgcc target `{target}` (supported: {})",
+        names.join(", ")
+    ))
 }
 
 fn xpack_host_tag(host: &str) -> Result<(&'static str, &'static str), String> {
@@ -90,7 +112,8 @@ fn xpack_host_tag(host: &str) -> Result<(&'static str, &'static str), String> {
         "aarch64-unknown-linux-gnu" => Ok(("linux-arm64", "tar.gz")),
         "aarch64-apple-darwin" => Ok(("darwin-arm64", "tar.gz")),
         "x86_64-apple-darwin" => Ok(("darwin-x64", "tar.gz")),
-        "x86_64-pc-windows-msvc" => Ok(("win32-x64", "zip")),
+        // Windows ARM64 runs x64 xPack toolchains transparently via Prism emulation.
+        "x86_64-pc-windows-msvc" | "aarch64-pc-windows-msvc" => Ok(("win32-x64", "zip")),
         other => Err(format!("no xPack prebuilt archive for host `{other}`")),
     }
 }
@@ -129,11 +152,20 @@ pub fn find_installed_gcc(cache_dir: &Path, spec: GccTargetSpec) -> Option<GccTo
     }
     let gxx = bin.join(format!("{}-g++{exe}", spec.tool_prefix));
     let ar = bin.join(format!("{}-ar{exe}", spec.tool_prefix));
+    let opt_tool = |name: &str| {
+        let p = bin.join(format!("{}-{name}{exe}", spec.tool_prefix));
+        p.is_file().then_some(p)
+    };
     Some(GccToolchain {
         root,
         gcc,
         gxx,
         ar,
+        ranlib: opt_tool("ranlib"),
+        objcopy: opt_tool("objcopy"),
+        objdump: opt_tool("objdump"),
+        strip: opt_tool("strip"),
+        size: opt_tool("size"),
         target: spec.target.to_string(),
         version: spec.version.to_string(),
     })
@@ -191,5 +223,46 @@ mod tests {
         let (arm_url, arm_file) = gcc_download_url(arm, "x86_64-pc-windows-msvc").unwrap();
         assert_eq!(arm_file, "xpack-arm-none-eabi-gcc-14.2.1-1.1-win32-x64.zip");
         assert!(arm_url.ends_with(".zip"));
+
+        // Windows ARM64 host falls back to win32-x64 xPack archive
+        let (_, win_arm64_file) = gcc_download_url(arm, "aarch64-pc-windows-msvc").unwrap();
+        assert_eq!(
+            win_arm64_file,
+            "xpack-arm-none-eabi-gcc-14.2.1-1.1-win32-x64.zip"
+        );
+    }
+
+    #[test]
+    fn routes_rust_and_gnu_triples_via_xtarget() {
+        assert_eq!(
+            find_spec("thumbv7em-none-eabi").unwrap().tool_prefix,
+            "arm-none-eabi"
+        );
+        assert_eq!(
+            find_spec("thumbv6m-none-eabi").unwrap().tool_prefix,
+            "arm-none-eabi"
+        );
+        assert_eq!(
+            find_spec("riscv32imac-unknown-none-elf")
+                .unwrap()
+                .tool_prefix,
+            "riscv-none-elf"
+        );
+        assert_eq!(
+            find_spec("riscv64gc-unknown-none-elf").unwrap().tool_prefix,
+            "riscv-none-elf"
+        );
+        assert_eq!(
+            find_spec("aarch64-unknown-none").unwrap().tool_prefix,
+            "aarch64-none-elf"
+        );
+        assert_eq!(
+            find_spec("x86_64-w64-mingw32").unwrap().target,
+            "x86_64-pc-windows-gnu"
+        );
+        assert_eq!(
+            find_spec("aarch64-w64-mingw32").unwrap().target,
+            "aarch64-pc-windows-gnu"
+        );
     }
 }
