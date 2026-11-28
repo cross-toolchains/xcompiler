@@ -9,11 +9,20 @@ repository.workspace = true
 keywords = ["compiler", "llvm", "gcc", "toolchain", "cross"]
 categories.workspace = true
 
+[features]
+default = ["cli"]
+cli = ["dep:clap"]
+
+[[bin]]
+name = "xcompiler"
+path = "src/main.rs"
+required-features = ["cli"]
+
 [dependencies]
-clap.workspace = true
+clap = { workspace = true, optional = true }
 xcompiler-core.workspace = true
-xgcc.workspace = true
-xllvm.workspace = true
+xgcc = { workspace = true, default-features = false }
+xllvm = { workspace = true, default-features = false }
 
 [package.metadata.binstall]
 pkg-url = "{ repo }/releases/download/v{ version }/{ name }-{ target }.{ archive-format }"

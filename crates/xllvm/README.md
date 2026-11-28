@@ -65,6 +65,24 @@ xlinux splat --target x86_64-unknown-linux-gnu --clang "$(xllvm path --managed)"
 | `slim` (default) | Linux / macOS / Windows (`x86_64` & `aarch64`) | [`cross-toolchains/llvm-slim`](https://github.com/cross-toolchains/llvm-slim/releases) |
 | `kernel-org` | Linux (`x86_64` & `aarch64`) | [`kernel.org/pub/tools/llvm`](https://www.kernel.org/pub/tools/llvm/) |
 
+## 🦀 Library
+
+```sh
+cargo add xllvm --no-default-features
+```
+
+```toml
+[dependencies]
+xllvm = { version = "0.1", default-features = false }
+```
+
+```rust
+use xllvm::InstallOptions;
+
+let tc = xllvm::install_llvm(&InstallOptions::default())?;
+println!("clang: {}", tc.clang.display());
+```
+
 ## License
 
 Dual-licensed under `MIT OR Apache-2.0`.

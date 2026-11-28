@@ -73,6 +73,24 @@ println!("clang: {}", llvm.clang.display());
 println!("lld:   {}", llvm.lld.display());
 ```
 
+## 🦀 Library
+
+```sh
+cargo add xcompiler --no-default-features
+```
+
+```toml
+[dependencies]
+xcompiler = { version = "0.1", default-features = false }
+```
+
+```rust
+use xcompiler::xllvm::{self, InstallOptions};
+
+let tc = xllvm::install_llvm(&InstallOptions::default())?;
+println!("clang: {}", tc.clang.display());
+```
+
 ## License
 
 Dual-licensed under `MIT OR Apache-2.0`.

@@ -65,6 +65,23 @@ xgcc install --target arm-none-eabi
 | `aarch64-none-elf` | [`xpack-dev-tools/aarch64-none-elf-gcc-xpack`](https://github.com/xpack-dev-tools/aarch64-none-elf-gcc-xpack) |
 | `riscv-none-elf` | [`xpack-dev-tools/riscv-none-elf-gcc-xpack`](https://github.com/xpack-dev-tools/riscv-none-elf-gcc-xpack) |
 
+## 🦀 Library
+
+```sh
+cargo add xgcc --no-default-features
+```
+
+```toml
+[dependencies]
+xgcc = { version = "0.1", default-features = false }
+```
+
+```rust
+let cache_dir = xgcc::default_cache_dir();
+let tc = xgcc::install_gcc("arm-none-eabi", &cache_dir)?;
+println!("gcc: {}", tc.gcc.display());
+```
+
 ## License
 
 Dual-licensed under `MIT OR Apache-2.0`.
