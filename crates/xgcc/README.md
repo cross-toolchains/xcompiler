@@ -65,6 +65,11 @@ xgcc install --target arm-none-eabi
 | `aarch64-none-elf` | [`xpack-dev-tools/aarch64-none-elf-gcc-xpack`](https://github.com/xpack-dev-tools/aarch64-none-elf-gcc-xpack) |
 | `riscv-none-elf` | [`xpack-dev-tools/riscv-none-elf-gcc-xpack`](https://github.com/xpack-dev-tools/riscv-none-elf-gcc-xpack) |
 
+> [!NOTE]
+> **Windows ARM64 (`aarch64-pc-windows-msvc`) hosts:** Upstream xPack releases do not publish native `win32-arm64` host binaries because mainline GCC lacks complete Windows-on-Arm host support. `xgcc` automatically falls back to the `win32-x64` archive, which runs transparently on Windows 11 ARM64 via Prism x64 emulation. For native Windows ARM64 host binaries, use [`xllvm`](../xllvm/README.md).
+>
+> **Target triple normalization:** Powered by [`xtarget`](https://crates.io/crates/xtarget), Rust bare-metal and MinGW triples (e.g. `thumbv7em-none-eabi`, `riscv32imac-unknown-none-elf`, `aarch64-unknown-none`, `x86_64-w64-mingw32`) automatically route to their corresponding GCC multilib toolchain.
+
 ## 🦀 Library
 
 ```sh
